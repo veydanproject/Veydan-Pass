@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Utility;Security;
+Comment=Passwords and one-time codes
+Exec={{exec}} %U
+Icon={{icon}}
+Name={{name}}
+StartupNotify=true
+StartupWMClass={{exec}}
+Terminal=false
+Type=Application

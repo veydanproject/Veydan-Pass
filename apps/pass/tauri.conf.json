@@ -1,0 +1,104 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Veydan Pass",
+  "version": "5.0.0",
+  "identifier": "net.veydan.pass",
+  "build": {
+    "beforeDevCommand": "node ../scripts/ui.mjs pass dev",
+    "devUrl": "http://localhost:1460",
+    "beforeBuildCommand": "node ../scripts/ui.mjs pass build",
+    "frontendDist": "../../data/build/pass"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Veydan Pass",
+        "width": 1200,
+        "height": 760,
+        "minWidth": 900,
+        "minHeight": 600,
+        "dragDropEnabled": true
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self'",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' asset: http://asset.localhost data: blob: https:",
+        "media-src": "'self' asset: http://asset.localhost blob:",
+        "font-src": "'self' data:",
+        "connect-src": "'self' ipc: http://ipc.localhost",
+        "frame-src": "'none'",
+        "object-src": "'none'"
+      },
+      "devCsp": {
+        "default-src": "'self'",
+        "script-src": "'self'",
+        "style-src": "'self' 'unsafe-inline'",
+        "img-src": "'self' asset: http://asset.localhost data: blob: https:",
+        "media-src": "'self' asset: http://asset.localhost blob:",
+        "font-src": "'self' data:",
+        "connect-src": "'self' ipc: http://ipc.localhost ws://localhost:1460 http://localhost:1460",
+        "frame-src": "'none'",
+        "object-src": "'none'"
+      },
+      "assetProtocol": {
+        "enable": false,
+        "scope": []
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "createUpdaterArtifacts": true,
+    "publisher": "Veydan Project",
+    "license": "LicenseRef-PolyForm-Perimeter-1.0.1",
+    "copyright": "Copyright 2026 Veydan Project",
+    "category": "Productivity",
+    "longDescription": "Veydan Pass keeps passwords and one-time codes (TOTP), with a password generator and its history. The vault lives encrypted on your device; sync between devices is end-to-end encrypted.",
+    "linux": {
+      "deb": {
+        "desktopTemplate": "linux/veydanpass.desktop",
+        "files": {
+          "/usr/share/doc/veydan-pass/copyright": "../../LICENSE"
+        },
+        "depends": ["libayatana-appindicator3-1"]
+      },
+      "rpm": {
+        "desktopTemplate": "linux/veydanpass.desktop",
+        "files": {
+          "/usr/share/licenses/veydan-pass/LICENSE": "../../LICENSE"
+        },
+        "depends": ["libappindicator-gtk3"]
+      },
+      "appimage": {
+        "files": {
+          "/usr/share/doc/veydan-pass/copyright": "../../LICENSE"
+        }
+      }
+    },
+    "macOS": {
+      "signingIdentity": "-"
+    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEJERjRFQjU3RjI5REYwMDQKUldRRThKM3lWK3YwdlZpQzNFbTlVTkZZb3NZbEhRZ1VucE96Q3JmUTZZYVE0SUpjbzBoLzBjWlQK",
+      "endpoints": [
+        "https://github.com/veydanproject/Veydan-Pass/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  }
+}

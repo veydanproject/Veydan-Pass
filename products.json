@@ -1,0 +1,45 @@
+{
+  "$comment": "Veydan Pass: the modules of the product and the product itself. This file is written for the published snapshot (\"snapshot\" names its product): scripts/boundaries.sh checks what is here, ui/vite-veydan-modules.js builds the UI from the modules, scripts/product.sh gives the wrappers of the Tauri CLI the crate, the identifiers and the ports. A dev server does not notice an edit: restart it.",
+  "snapshot": "pass",
+  "modules": {
+    "pass": {
+      "ui": "ui/src/lib/pass",
+      "routes": [
+        "ui/src/routes/passwords",
+        "ui/src/routes/(mobile)/passwords",
+        "ui/src/routes/(mobile)/totp",
+        "ui/src/routes/(mobile)/tools"
+      ],
+      "crates": [
+        "crates/pass"
+      ]
+    }
+  },
+  "targets": {
+    "pass": {
+      "kind": "product",
+      "app": "apps/pass",
+      "tagline": {
+        "en": "Passwords and one-time codes, encrypted and synced.",
+        "ru": "Пароли и одноразовые коды — зашифрованы и синхронизируются."
+      },
+      "modules": [
+        "pass"
+      ],
+      "identifier": "net.veydan.pass",
+      "repo": "veydanproject/Veydan-Pass",
+      "public": true,
+      "devPort": 1460,
+      "androidDevPort": 1470,
+      "plugins": [
+        "dialog",
+        "fs",
+        "updater",
+        "process",
+        "single-instance",
+        "opener",
+        "barcode-scanner"
+      ]
+    }
+  }
+}
