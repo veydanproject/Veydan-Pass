@@ -5,8 +5,8 @@
 <h1 align="center">Veydan Pass</h1>
 
 <p align="center">
-  <b>Passwords and one-time codes, encrypted and synced.</b><br>
-  A password manager and a 2FA authenticator in one app, on your computer and your phone.
+  <b>Your passwords. Your 2FA. Your vault.</b><br>
+  A local-first password manager and authenticator with encrypted sync through storage you control.
 </p>
 
 <p align="center">
@@ -152,7 +152,7 @@ source.
 
 Copyright © 2026 **Veydan Project**.
 
-Developed by **Rookbaem Technologies LLC**, USA.
+Developed by **Rookbeam Technologies LLC**, USA.
 
 Veydan Pass is **source-available** software under the
 [PolyForm Perimeter License 1.0.1](https://polyformproject.org/licenses/perimeter/1.0.1):
