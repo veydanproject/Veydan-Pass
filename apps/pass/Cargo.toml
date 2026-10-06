@@ -3,7 +3,7 @@
 
 [package]
 name = "veydanpass"
-version = "5.0.1"
+version = "5.0.2"
 description = "Passwords, TOTP, the password generator and its history"
 authors = ["Veydan Project"]
 edition = "2021"
@@ -19,7 +19,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 # The product crate names what tauri-build and generate_context! read
-# (docs/platform-spec.md 5.5): tauri with the features of its config,
+# (internal/platform-spec.md 5.5): tauri with the features of its config,
 # serde_json for the `plugins` section, every plugin its capabilities name.
 [dependencies]
 tauri = { version = "2", features = [] }

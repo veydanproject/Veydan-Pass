@@ -2,8 +2,8 @@
 # SPDX-FileCopyrightText: 2026 Veydan Project
 # SPDX-License-Identifier: LicenseRef-PolyForm-Perimeter-1.0.1
 #
-# Dependency boundaries of the platform (docs/platform-spec.md, section 6;
-# for the messenger also docs/messenger-spec.md §4.2). Fails when a crate
+# Dependency boundaries of the platform (internal/platform-spec.md, section 6;
+# for the messenger also internal/messenger-spec.md §4.2). Fails when a crate
 # depends on what its row of the matrix does not allow, when a formal rule
 # of the module contract is broken, or when a UI file imports what the
 # matrix of the frontend (6.3) does not allow it.
@@ -193,8 +193,9 @@ crates/shell                     veydan-shell              lib      yes  crates/
 crates/pass                      veydan-pass               module   yes  crates/build-cfg crates/core crates/lock crates/sync-host crates/shell
 crates/notes                     veydan-notes              module   yes  crates/build-cfg crates/core crates/lock crates/sync crates/sync-host crates/shell
 crates/messenger-app             veydan-messenger-app      module   yes  crates/build-cfg crates/core crates/lock crates/shell crates/messenger/core crates/messenger/runtime crates/messenger/notify crates/desktop-notify crates/tauri-plugin-veydan-push
+crates/tor                       veydan-tor                module   yes  crates/build-cfg crates/core crates/shell
 crates/tauri-plugin-veydan-push  tauri-plugin-veydan-push  plugin   yes  crates/build-cfg
-apps/space                       veydanspace               product  yes  crates/shell crates/core crates/lock crates/sync crates/sync-host crates/pass crates/notes crates/messenger-app crates/tauri-plugin-veydan-push
+apps/space                       veydanspace               product  yes  crates/shell crates/core crates/lock crates/sync crates/sync-host crates/pass crates/notes crates/messenger-app crates/tor crates/tauri-plugin-veydan-push
 apps/notes                       veydannotes               product  yes  crates/shell crates/notes
 apps/pass                        veydanpass                product  yes  crates/shell crates/pass
 apps/chat                        veydanchat                product  yes  crates/shell crates/messenger-app crates/tauri-plugin-veydan-push
@@ -217,7 +218,7 @@ row() {
 while IFS=$'\t' read -r pkg dir dep kind path; do
   if ! r=$(row "$dir"); then
     if [ "$dep" = - ]; then
-      say "$pkg ($dir): not in the dependency matrix (add its row to scripts/boundaries.sh and to section 6.1 of docs/platform-spec.md)"
+      say "$pkg ($dir): not in the dependency matrix (add its row to scripts/boundaries.sh and to section 6.1 of internal/platform-spec.md)"
     fi
     continue
   fi
@@ -361,6 +362,7 @@ owner() {
     workspace_*|profile_*|profiles_*|proxy_*|proxies_*|camoufox_*) echo browser ;;
     ssh_*|sftp_*|fs_*) echo ssh ;;
     backup_*) echo backup ;;
+    tor_*) echo tor ;;
     *) echo "" ;;
   esac
 }
@@ -385,7 +387,7 @@ while read -r dir row_pkg row_kind _; do
   while read -r command module _; do
     want=$(owner "$command")
     if [ -z "$want" ]; then
-      say "command $command: no module owns its prefix (name it in owner() of scripts/boundaries.sh and in section 22 of docs/platform-spec.md)"
+      say "command $command: no module owns its prefix (name it in owner() of scripts/boundaries.sh and in section 22 of internal/platform-spec.md)"
     elif [ "$want" != "$module" ]; then
       say "command $command is declared by module '$module'; section 22 gives it to '$want'"
     fi
@@ -445,8 +447,9 @@ allowed() {
     media)     echo "messenger-core messenger-store messenger-http" ;;
     groups)    echo "messenger-core messenger-store messenger-media messenger-dm messenger-links" ;;
     push)      echo "messenger-core messenger-http" ;;
+    presence)  echo "messenger-core messenger-store" ;;
     notify)    echo "messenger-core messenger-store messenger-ingress messenger-contacts messenger-dm messenger-groups messenger-media messenger-transport messenger-vlink" ;;
-    runtime)   echo "messenger-core messenger-store messenger-transport messenger-identity messenger-ingress messenger-contacts messenger-dm messenger-media messenger-groups messenger-links messenger-preview messenger-push messenger-notify messenger-vlink messenger-http" ;;
+    runtime)   echo "messenger-core messenger-store messenger-transport messenger-identity messenger-ingress messenger-contacts messenger-dm messenger-media messenger-groups messenger-links messenger-preview messenger-push messenger-notify messenger-vlink messenger-http messenger-presence" ;;
     testkit)   echo "messenger-core messenger-store messenger-runtime messenger-notify messenger-dm messenger-groups messenger-vlink" ;;
     *)         echo "__unknown__" ;;
   esac
@@ -455,7 +458,7 @@ allowed() {
   crate=${dir#crates/messenger/}
   allow=$(allowed "$crate")
   if [ "$dep" = - ]; then
-    [ "$allow" != "__unknown__" ] || say "$crate: not in the dependency matrix of the messenger (update scripts/boundaries.sh and docs/messenger-spec.md)"
+    [ "$allow" != "__unknown__" ] || say "$crate: not in the dependency matrix of the messenger (update scripts/boundaries.sh and internal/messenger-spec.md)"
     [ "$pkg" = "messenger-$crate" ] || say "$dir: the package is named '$pkg'; a crate of the messenger is named after its directory, 'messenger-$crate'"
     continue
   fi
