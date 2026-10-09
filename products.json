@@ -21,7 +21,20 @@
       "app": "apps/pass",
       "tagline": {
         "en": "Passwords and one-time codes, encrypted and synced.",
-        "ru": "Пароли и одноразовые коды — зашифрованы и синхронизируются."
+        "ru": "Пароли и одноразовые коды — зашифрованы и синхронизируются.",
+        "uk": "Паролі й одноразові коди — зашифровані та синхронізовані.",
+        "de": "Passwörter und Einmalcodes, verschlüsselt und synchronisiert.",
+        "es": "Contraseñas y códigos de un solo uso, cifrados y sincronizados.",
+        "fr": "Mots de passe et codes à usage unique, chiffrés et synchronisés.",
+        "it": "Password e codici monouso, crittografati e sincronizzati.",
+        "pl": "Hasła i kody jednorazowe, zaszyfrowane i synchronizowane.",
+        "pt-BR": "Senhas e códigos de uso único, criptografados e sincronizados.",
+        "tr": "Parolalar ve tek kullanımlık kodlar, şifreli ve eşitlenmiş.",
+        "id": "Kata sandi dan kode sekali pakai, terenkripsi dan tersinkron.",
+        "vi": "Mật khẩu và mã một lần, được mã hóa và đồng bộ.",
+        "zh-CN": "密码和一次性验证码，加密并同步。",
+        "ja": "パスワードとワンタイムコードを暗号化して同期。",
+        "ko": "암호화되고 동기화되는 비밀번호와 일회용 코드."
       },
       "modules": [
         "pass"

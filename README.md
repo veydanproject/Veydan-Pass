@@ -16,6 +16,10 @@
 </p>
 
 <p align="center">
+  <sub>15 languages: English · Deutsch · Español · Français · Italiano · Polski · Русский · Українська · Português (Brasil) · Türkçe · Bahasa Indonesia · Tiếng Việt · 简体中文 · 日本語 · 한국어</sub>
+</p>
+
+<p align="center">
   <a href="https://github.com/veydanproject/Veydan-Pass/releases/latest"><b>Download</b></a> ·
   <a href="#features">Features</a> ·
   <a href="#on-your-phone">On your phone</a> ·

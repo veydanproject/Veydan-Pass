@@ -3,7 +3,7 @@
 
 [package]
 name = "veydanpass"
-version = "5.0.3"
+version = "5.0.4"
 description = "Passwords, TOTP, the password generator and its history"
 authors = ["Veydan Project"]
 edition = "2021"
