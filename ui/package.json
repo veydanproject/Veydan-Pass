@@ -5,6 +5,7 @@
   "description": "Passwords and one-time codes, encrypted and synced.",
   "author": "Veydan Project",
   "type": "module",
+  "packageManager": "pnpm@12.4.2",
   "scripts": {
     "dev": "node ../scripts/ui.mjs pass dev",
     "build": "node ../scripts/ui.mjs pass build",
