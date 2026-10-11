@@ -8,6 +8,7 @@ host_info shell all
 labels_resolve shell all
 lock_lock shell all
 lock_recover shell all
+lock_recover_keep shell all
 lock_recovery_check shell all
 lock_recovery_regenerate shell all
 lock_set shell all
@@ -17,6 +18,7 @@ lock_touch shell all
 lock_unlock shell all
 media_grant_access shell all
 modules_choose shell all
+modules_first_run_done shell all
 modules_list shell all
 modules_set_enabled shell all
 open_url shell desktop
