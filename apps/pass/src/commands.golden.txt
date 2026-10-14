@@ -1,6 +1,7 @@
 app_clear_data shell all
 app_locale_get shell desktop
 app_locale_set shell desktop
+app_relaunch shell desktop
 app_start_error shell all
 clipboard_write_text shell desktop
 demo_seed shell all
@@ -61,6 +62,8 @@ tray_settings_set shell desktop
 update_check shell all
 update_open shell all
 update_supported shell desktop
+updater_check shell desktop
+updater_install shell desktop
 vault_replaced_keys shell all
 vault_replaced_keys_open shell all
 window_minimize shell desktop
