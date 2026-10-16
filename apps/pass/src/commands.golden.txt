@@ -22,7 +22,7 @@ modules_choose shell all
 modules_first_run_done shell all
 modules_list shell all
 modules_set_enabled shell all
-open_url shell desktop
+open_url shell all
 password_copy pass desktop
 password_create pass all
 password_delete pass all
