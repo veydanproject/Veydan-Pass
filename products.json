@@ -36,6 +36,23 @@
         "ja": "パスワードとワンタイムコードを暗号化して同期。",
         "ko": "암호화되고 동기화되는 비밀번호와 일회용 코드."
       },
+      "slogan": {
+        "en": "Every password, one key.",
+        "ru": "Все пароли — один ключ.",
+        "uk": "Усі паролі — один ключ.",
+        "de": "Alle Passwörter, ein Schlüssel.",
+        "es": "Todas las contraseñas, una sola llave.",
+        "fr": "Tous vos mots de passe, une seule clé.",
+        "it": "Tutte le password, un'unica chiave.",
+        "pl": "Wszystkie hasła — jeden klucz.",
+        "pt-BR": "Todas as senhas, uma só chave.",
+        "tr": "Tüm parolalar, tek bir anahtar.",
+        "id": "Semua kata sandi, satu kunci.",
+        "vi": "Mọi mật khẩu, một chìa khóa.",
+        "zh-CN": "所有密码，一把钥匙。",
+        "ja": "すべてのパスワードを、ひとつの鍵で。",
+        "ko": "모든 비밀번호, 하나의 키."
+      },
       "modules": [
         "pass"
       ],
