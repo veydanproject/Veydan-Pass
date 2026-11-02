@@ -11,7 +11,10 @@
   a phone screen never mounts it.
 
   `oninput` follows every step (the pane takes it at once); `oncommit` comes
-  once at the end of a drag or a key, with `null` after a reset.
+  once at the end of a drag or a key, with `null` after a reset. `snap`, if
+  given, turns the width a key gives into the one the pane takes, from the
+  width before it: for a pane that jumps over widths it has no look for
+  (the list of chats: its covers, then words from 260 px).
 -->
 <script lang="ts">
   import { t } from '$lib/core/i18n';
@@ -28,8 +31,10 @@
     side?: 'left' | 'right';
     oninput: (px: number) => void;
     oncommit: (px: number | null) => void;
+    /** The keyboard only: the width a key gives (`px`) → the one the pane takes, from `prev`. */
+    snap?: (px: number, prev: number) => number;
   }
-  let { value, min, max, defaultValue, side = 'right', oninput, oncommit }: Props = $props();
+  let { value, min, max, defaultValue, side = 'right', oninput, oncommit, snap }: Props = $props();
 
   let dragging = $state(false);
   let start = { x: 0, width: 0 };
@@ -68,9 +73,10 @@
   }
 
   function key(e: KeyboardEvent) {
-    const next = keyWidth(value, e.key, side, min, max);
-    if (next === null) return;
+    const step = keyWidth(value, e.key, side, min, max);
+    if (step === null) return;
     e.preventDefault();
+    const next = snap ? clampWidth(snap(step, value), min, max) : step;
     if (next === value) return;
     oninput(next);
     oncommit(next);
@@ -143,7 +149,7 @@
   .pane-resizer:hover { background: color-mix(in srgb, var(--accent-text) 6%, transparent); }
   .pane-resizer:hover .pill,
   .grip:focus-visible .pill { height: 44px; background: var(--accent-text); }
-  .grip:focus-visible { box-shadow: 0 0 0 2px var(--accent-border); }
+  .grip:focus-visible { box-shadow: 0 0 0 2px var(--focus-ring); }
 
   .pane-resizer.dragging { background: color-mix(in srgb, var(--accent) 35%, transparent); }
   .pane-resizer.dragging .grip { top: 0; height: 100%; transform: none; }

@@ -289,6 +289,8 @@ pub fn run(context: tauri::Context, product: Product, modules: Vec<Module>) {
         w.apply_to_context(&mut context, product.name);
     }
     let windows = hold_windows(context.config_mut());
+    // The schemes of links the product takes from the system (`crate::links`).
+    let link_schemes = crate::links::schemes(context.config());
 
     let modules = with_shell(modules);
     let start = match Start::of(product, &modules) {
@@ -305,8 +307,10 @@ pub fn run(context: tauri::Context, product: Product, modules: Vec<Module>) {
     let builder = builder
         // Must be first: second launch is closed here before other plugins run.
         // No key of its own: the plugin takes the product's identifier.
-        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+        .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
             crate::tray::show_main_window(app);
+            // A link clicked outside starts the app again with it.
+            crate::links::received_args(app, &args);
         }))
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
@@ -328,6 +332,7 @@ pub fn run(context: tauri::Context, product: Product, modules: Vec<Module>) {
     let builder = builder
         .manage(StartState::default())
         .setup(move |app| {
+            crate::links::setup(app.handle(), link_schemes);
             // A --workdir profile keeps the same layout inside its own directory.
             #[cfg(desktop)]
             let app_data_dir = match workdir {
@@ -364,7 +369,51 @@ pub fn run(context: tauri::Context, product: Product, modules: Vec<Module>) {
             }
         });
     #[cfg(mobile)]
-    builder.run(context).expect("error while running veydan");
+    builder
+        .build(context)
+        .expect("error while building tauri application")
+        .run(|_app, run_event| {
+            #[cfg(target_os = "android")]
+            if let tauri::RunEvent::Exit = run_event {
+                end_process(_app);
+            }
+            let tauri::RunEvent::WindowEvent { event, .. } = run_event else {
+                return;
+            };
+            match event {
+                // Back in front: a link clicked outside may wait (`crate::links`),
+                // and what the other devices wrote meanwhile comes in.
+                tauri::WindowEvent::Resumed => {
+                    #[cfg(target_os = "android")]
+                    crate::links::resumed(_app);
+                    veydan_sync_host::edits::app_moved(true);
+                }
+                // What was just written leaves before the system stops the app.
+                tauri::WindowEvent::Suspended => veydan_sync_host::edits::app_moved(false),
+                _ => {}
+            }
+        });
+}
+
+/// The activity went for good (Back from the first screen of a task the
+/// system finishes, the system freeing memory under an outside camera): no
+/// window is left, and tao ends the process with `exit()` as soon as this
+/// event returns. `exit()` runs the destructors of the C++ libraries of the
+/// process (hwui, the WebView) while their threads still run, and one of
+/// them takes a mutex already destroyed — FORTIFY `pthread_mutex_lock called
+/// on a destroyed mutex` (ROO-481, also ROO-116, ROO-167). Tauri's cleanup
+/// first, then `_exit`: the process ends the way the system ends one, with
+/// no destructor run under a living thread. The next start is a new process,
+/// as before.
+#[cfg(target_os = "android")]
+fn end_process(app: &tauri::AppHandle) -> ! {
+    extern "C" {
+        fn _exit(status: std::ffi::c_int) -> !;
+    }
+    eprintln!("shell: the activity is gone, the process ends");
+    app.cleanup_before_exit();
+    // SAFETY: `_exit` takes no pointers and does not return.
+    unsafe { _exit(0) }
 }
 
 #[cfg(test)]

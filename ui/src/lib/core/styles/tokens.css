@@ -67,6 +67,7 @@
   --lh-body:  1.4667;  /* 22px on 15px body text */
 
   /* ── Radius ── (theme-independent; «Quiet Glass» scale) */
+  --file-meta:    0px;   /* the room a file line keeps for the time of its message */
   --radius-xs:    4px;   /* small kind tiles, checkboxes */
   --radius-badge: 6px;   /* counters, kind chips */
   --radius-sm:    8px;   /* status pills, icon tiles, menu items, 32px buttons */
@@ -92,6 +93,8 @@
   --control-h: 40px;  /* высота контролов: кнопки, поиск, select в панелях фильтров */
   --control-h-sm: 32px; /* маленькие кнопки */
   --control-h-lg: 44px; /* поля форм в drawer'ах, сегмент-кнопки, касание */
+  --media-check:    26px; /* the circle of choice on a tile of a gallery */
+  --media-check-lg: 30px; /* the same in its viewer */
 
   /* ── Content rail (app width — shared by all routes + topbar) ── */
   --page-max:        1680px;  /* content rail of a page: the window's width up to this */

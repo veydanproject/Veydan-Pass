@@ -21,8 +21,14 @@
     closeOnBackdrop?: boolean;
     /** The phone's sheet keeps its × (default true); a question whose footer has «Отмена» passes false. */
     closable?: boolean;
+    /** The phone's sheet can be pulled up to the whole screen (BottomSheet `expandable`). */
+    expandable?: boolean;
+    /** The phone's sheet without a title: what a screen reader calls it. */
+    label?: string;
     onclose?: () => void;
     header?: Snippet;
+    /** Beside the title, in the same head (a «?» of what the title means); a phone's sheet keeps it in its head too. */
+    titleAside?: Snippet;
     children: Snippet;
     footer?: Snippet;
   }
@@ -33,8 +39,11 @@
     width,
     closeOnBackdrop = true,
     closable = true,
+    expandable = false,
+    label,
     onclose,
     header,
+    titleAside,
     children,
     footer,
   }: Props = $props();
@@ -62,11 +71,13 @@
 
 <svelte:window onkeydown={onKeydown} />
 
+<!-- The phone's footer goes to the sheet's own foot, outside its scrolling body: the buttons stay in sight. -->
+{#snippet sheetFooter()}<div class="sheet-actions">{@render footer?.()}</div>{/snippet}
+
 {#if isMobile}
-  <BottomSheet open={!!open} title={header ? '' : (title ?? '')} onclose={close} {closable}>
+  <BottomSheet open={!!open} title={header ? '' : (title ?? '')} onclose={close} {closable} {titleAside} {expandable} {label} footer={footer ? sheetFooter : undefined}>
     {#if header}<div class="sheet-header">{@render header()}</div>{/if}
-    <div class="sheet-body">{@render children()}</div>
-    {#if footer}<div class="sheet-actions">{@render footer()}</div>{/if}
+    <div class="sheet-body" class:grow={expandable}>{@render children()}</div>
   </BottomSheet>
 {:else if open}
   <div
@@ -79,7 +90,7 @@
   >
     <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_noninteractive_element_interactions -->
     <div
-      class="dialog"
+      class="dialog on-glass"
       in:dialogIn
       out:dialogOut
       style={width ? `width:${width}` : undefined}
@@ -92,7 +103,8 @@
         <div class="dialog-header">{@render header()}</div>
       {:else if title}
         <div class="dialog-header">
-          <h2 class="dialog-title">{title}</h2>
+          <!-- The «?» right after the title, outside the heading: its note is not read as part of the title. -->
+          <div class="dialog-title-row"><h2 class="dialog-title">{title}</h2>{@render titleAside?.()}</div>
           <button class="dialog-close" onclick={close} aria-label={$t('common_close')} title={$t('common_close')}>
             <Icon name="x" size={16} />
           </button>
@@ -151,7 +163,16 @@
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
+  /* The title and its «?»: the row a note opens under. */
+  .dialog-title-row {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+  }
   .dialog-title {
+    min-width: 0;
     font-size: var(--fs-lg);
     font-weight: var(--fw-bold);
     line-height: 1.35;
@@ -184,11 +205,13 @@
   /* The phone's sheet. */
   .sheet-header { display: flex; align-items: center; gap: var(--sp-3); }
   .sheet-body { display: flex; flex-direction: column; gap: var(--sp-3); line-height: 1.45; }
+  /* A sheet that can be pulled up fills the screen it grew to. */
+  .sheet-body.grow { flex: 1 0 auto; }
   /* A finger does not drag a resize corner: the field grows with its text. */
   .sheet-body :global(textarea) { resize: none; }
   /* Stacked, the whole width, 48 high, the verb on top: the footer reads
      «Отмена, verb» like the desktop's, the sheet turns it over (design kit). */
-  .sheet-actions { display: flex; flex-direction: column-reverse; gap: var(--sp-2); padding-top: var(--sp-1); }
+  .sheet-actions { display: flex; flex-direction: column-reverse; gap: var(--sp-2); }
   .sheet-actions :global(.btn) {
     width: 100%;
     min-height: 48px;
