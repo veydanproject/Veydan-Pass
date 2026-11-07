@@ -18,6 +18,9 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 [features]
 # The demo data in a release build (the screenshots): veydan-shell's feature.
 demo = ["veydan-shell/demo"]
+# The web inspector in a release build (the iOS lab, mode device-inspect):
+# Safari or pymobiledevice3 reaches the webview of the phone.
+devtools = ["tauri/devtools"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }

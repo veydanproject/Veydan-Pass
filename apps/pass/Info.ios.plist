@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- The scene lifecycle: an app built with the SDK of iOS 27 that does
+       not adopt it stops at its first scene (EXC_BREAKPOINT in
+       UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption). tao
+       takes the scene path only when the manifest says "multiple scenes"
+       (tao 0.35, platform_impl/ios/scene.rs); an iPhone still shows one. -->
+  <key>UIApplicationSceneManifest</key>
+  <dict>
+    <key>UIApplicationSupportsMultipleScenes</key>
+    <true/>
+  </dict>
+</dict>
+</plist>
