@@ -11,6 +11,9 @@
 resolver = "2"
 members = ["apps/pass", "crates/build-cfg", "crates/core", "crates/lock", "crates/pass", "crates/shell", "crates/sync", "crates/sync-host"]
 
+[patch.crates-io]
+sqlx-sqlite = { path = "vendor/sqlx-sqlite" }
+
 [profile.release]
 # Symbol tables go; the dynamic exports (Tauri's and the push handler's
 # `Java_*`) stay. Android packages the library as cargo leaves it, and a

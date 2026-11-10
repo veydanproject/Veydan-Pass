@@ -50,11 +50,13 @@ sync_set_config shell all
 sync_status shell all
 sync_trigger shell all
 totp_add pass all
+totp_copy pass desktop
 totp_delete pass all
 totp_generate_code pass all
 totp_generate_codes pass all
 totp_list pass all
 totp_preview_uri pass all
+totp_reveal pass all
 totp_update pass all
 tray_set_labels shell desktop
 tray_settings_get shell desktop
