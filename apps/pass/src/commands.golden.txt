@@ -3,6 +3,12 @@ app_locale_get shell desktop
 app_locale_set shell desktop
 app_relaunch shell desktop
 app_start_error shell all
+chrome_bars shell all
+chrome_clipboard_has_image shell all
+chrome_clipboard_image shell all
+chrome_edges shell all
+files_save shell all
+files_stage shell all
 clipboard_write_text shell desktop
 demo_seed shell all
 host_info shell all

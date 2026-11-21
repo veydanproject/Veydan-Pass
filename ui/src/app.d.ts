@@ -27,12 +27,18 @@ declare namespace App {
     attachSheet?: boolean;
     /** The mode of choosing messages of a chat is on (messenger/dm/ChatWindow.svelte). */
     chooseMessages?: boolean;
+    /** The search of a chat filters its conversation (messenger/dm/ChatWindow.svelte). */
+    searchMessages?: boolean;
     /** The sheet of a forward is open (messenger/content/ForwardDialog.svelte). */
     forwardSheet?: boolean;
     /** The emoji panel of a phone is open in the keyboard's place (messenger/dm/Composer.svelte). */
     emojiDock?: boolean;
     /** The sheet of a dropdown list of a phone is open (core/ui/CustomSelect.svelte). */
     selectSheet?: boolean;
+    /** The window of a message's text to select is open (messenger/content/SelectTextDialog.svelte). */
+    selectText?: boolean;
+    /** A drawer of a phone is open (core/ui/Drawer.svelte). */
+    drawer?: boolean;
     /** My profile is being edited (messenger/contacts/OwnProfileCard.svelte). */
     profileEdit?: boolean;
   }

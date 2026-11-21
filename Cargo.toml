@@ -13,6 +13,10 @@ members = ["apps/pass", "crates/build-cfg", "crates/core", "crates/lock", "crate
 
 [patch.crates-io]
 sqlx-sqlite = { path = "vendor/sqlx-sqlite" }
+# tao 0.35.3 with the scene configuration of iOS kept alive for UIKit (the
+# launch crash of the TestFlight build; tao 0.36 has it) and the link of a
+# cold start on iOS sent as `Opened` (vendor/tao/PATCH.md).
+tao = { path = "vendor/tao" }
 
 [profile.release]
 # Symbol tables go; the dynamic exports (Tauri's and the push handler's
