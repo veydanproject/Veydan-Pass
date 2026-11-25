@@ -21,8 +21,8 @@ builds, tests and packages the app on its own.
 | Tool | Version |
 |---|---|
 | Rust | the one pinned in `rust-toolchain.toml` (`rustup` installs it on first use) |
-| Node.js | 22 or newer |
-| pnpm | 11 |
+| Node.js | 24, the version in `ui/.node-version` |
+| pnpm | 12, the version `packageManager` names in `ui/package.json` |
 | Linux only | WebKitGTK 4.1, GTK 3, libsoup 3, librsvg, libayatana-appindicator, OpenSSL |
 
 On Debian or Ubuntu the Linux libraries are:
@@ -86,7 +86,7 @@ Android build at a time.
 
 ## Checks and tests
 
-These are the commands CI runs on every push:
+Run these before you send a patch:
 
 ```bash
 node scripts/ui.mjs pass svelte-check     # type check of the UI
