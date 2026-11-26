@@ -61,6 +61,7 @@
       "public": true,
       "devPort": 1460,
       "androidDevPort": 1470,
+      "iosDevPort": 1472,
       "plugins": [
         "dialog",
         "fs",
