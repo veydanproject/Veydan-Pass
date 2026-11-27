@@ -13,6 +13,8 @@ clipboard_write_text shell desktop
 demo_seed shell all
 host_info shell all
 labels_resolve shell all
+shares_take shell all
+shares_forget shell all
 lock_lock shell all
 lock_recover shell all
 lock_recover_keep shell all
